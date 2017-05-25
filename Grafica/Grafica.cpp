@@ -25,43 +25,22 @@ void Grafica::Window_Open(Win::Event& e)
 	//xy1.Graphs[0].Type = Win::Graph::circle;
 	//xy1.Graphs[0].Caption = L"My Function";
 	xy1.RefreshAll();
-}
-
-
-
-void Grafica::btPlot_Click(Win::Event& e)
-{
-	const double minX = this->tbxMinimo.DoubleValue;
-	const double maxX = this->tbxMaximo.DoubleValue;
+	//
+	double minX = 0.0;
+	double maxX = 10;
 	if (minX >= maxX)return;
 	xy1.MinX = minX;
 	xy1.MaxX = maxX;
-	const double deltaX = (maxX - minX) / 100;
-	double x= 0.0;
+	double deltaX = (maxX - minX) / 100;
+	double x = 0.0;
 	for (int i = 0; i < 100; i++)
 	{
 		x = minX + i*deltaX;
 		xy1.Graphs[0][i].x = x;
-		xy1.Graphs[0][i].y = ComputeY(x);
+		xy1.Graphs[0][i].y = sin(x);
 	}
 	xy1.AutoScaleY();
 	xy1.RefreshAll();
-}
-double Grafica::ComputeY(double x)
-{
-	wstring sourceCode;
-	Sys::Format(sourceCode, L"double x=%g;double y=%s;", x, tbxEntrada.Text.c_str());
-	vector<Cpl::Compiler::Instruction>machineCode;
-	Cpl::Compiler compiler;
-	compiler.Compile(sourceCode.c_str(), machineCode);
-	Cpl::VirtualMachine virtualMachine;
-	Mt::BoolTs running;
-	Mt::DoubleTs progress;
-	Mt::BoolTs resetTime;
-	virtualMachine.Setup(compiler.variableInfo, machineCode, L"dummy");
-	running.Set(true);
-	virtualMachine.ThreadFunc(running, progress, resetTime);
-	return virtualMachine.memDouble[1];
-
+	//
 }
 
