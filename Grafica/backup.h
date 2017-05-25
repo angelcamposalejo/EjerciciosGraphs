@@ -20,11 +20,12 @@ protected:
 	Win::Label lb3;
 	Win::Textbox tbxMaximo;
 	Win::XyChart xy1;
+	Win::Button btPlot;
 protected:
 	Win::Gdi::Font fontArial014A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx = Sys::Convert::PixelToDlgUnitX(428);
+		dlgTemplate.cx = Sys::Convert::PixelToDlgUnitX(465);
 		dlgTemplate.cy = Sys::Convert::PixelToDlgUnitY(449);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -39,6 +40,7 @@ protected:
 		lb3.Create(NULL, L"Maximo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 193, 89, 85, 25, hWnd, 1004);
 		tbxMaximo.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 278, 90, 89, 25, hWnd, 1005);
 		xy1.Create(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_VISIBLE, 25, 143, 396, 299, hWnd, 1006);
+		btPlot.Create(NULL, L"Plot", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 379, 91, 79, 28, hWnd, 1007);
 		fontArial014A.Create(L"Arial", 14, false, false, false, false);
 		lb1.Font = fontArial014A;
 		tbxEntrada.Font = fontArial014A;
@@ -47,16 +49,17 @@ protected:
 		lb3.Font = fontArial014A;
 		tbxMaximo.Font = fontArial014A;
 		xy1.Font = fontArial014A;
+		btPlot.Font = fontArial014A;
 	}
 	//_________________________________________________
-	void tbxEntrada_Change(Win::Event& e);
-	void tbxMinimo_Change(Win::Event& e);
+	void tbxMaximo_Change(Win::Event& e);
+	void btPlot_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
-		if (tbxEntrada.IsEvent(e, EN_CHANGE)) {tbxEntrada_Change(e); return true;}
-		if (tbxMinimo.IsEvent(e, EN_CHANGE)) {tbxMinimo_Change(e); return true;}
+		if (tbxMaximo.IsEvent(e, EN_CHANGE)) {tbxMaximo_Change(e); return true;}
+		if (btPlot.IsEvent(e, BN_CLICKED)) {btPlot_Click(e); return true;}
 		return false;
 	}
 };

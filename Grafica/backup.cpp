@@ -58,15 +58,24 @@ void Grafica::RefreshGraph()
 double Grafica::EvaluateFunction(const valarray<double>& coeficientes, double x)
 {
 	double evaluacion = 0.0;
-	const int orden = coeficientes.size() - 2;
-	double resultado = coeficientes[coeficientes.size() - 1];
+	const int orden = coeficientes.size() - 1;
 	for (int i = 0, j = orden; i < orden; i++, j--)
 	{
-		evaluacion = (1 * coeficientes[i] * pow(resultado, j)) + evaluacion;
+		evaluacion = (1 * coeficientes[i] * pow(x, j)) + evaluacion;
 	}
 	return evaluacion;
 }
 void Grafica::tbxMinimo_Change(Win::Event& e)
+{
+	RefreshGraph();
+}
+
+void Grafica::tbxMaximo_Change(Win::Event& e)
+{
+	RefreshGraph();
+}
+
+void Grafica::btPlot_Click(Win::Event& e)
 {
 }
 
